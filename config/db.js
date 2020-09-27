@@ -3,22 +3,40 @@
 
 const mongoose = require('mongoose');
 const config = require('config');
-const db = config.get('mongoURI');
+const dbURL = config.get('mongoURI');
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect(
-      db,
-      {
-        useNewUrlParser: true
-      }
-    );
+//require chalk module to give colors to console text
+var chalk = require('chalk');
 
-    console.log('MongoDB is Connected...');
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
-  }
-};
+//require database URL from properties file
 
-module.exports = connectDB;
+
+var connected = chalk.bold.cyan;
+var error = chalk.bold.yellow;
+var disconnected = chalk.bold.red;
+var termination = chalk.bold.magenta;
+
+//export this function and imported by server.js
+module.exports =function(){
+
+    mongoose.connect(dbURL);
+
+    mongoose.connection.on('connected', function(){
+        console.log(connected("Mongoose default connection is open to ", dbURL));
+    });
+
+    mongoose.connection.on('error', function(err){
+        console.log(error("Mongoose default connection has occured "+err+" error"));
+    });
+
+    mongoose.connection.on('disconnected', function(){
+        console.log(disconnected("Mongoose default connection is disconnected"));
+    });
+
+    process.on('SIGINT', function(){
+        mongoose.connection.close(function(){
+            console.log(termination("Mongoose default connection is disconnected due to application termination"));
+            process.exit(0)
+        });
+    });
+}

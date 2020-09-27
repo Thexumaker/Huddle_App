@@ -1,7 +1,7 @@
-// default.json
+
 
 {
   "mongoURI":
-    "mongodb+srv://huddle_admin:vJ4sE5CwPxMbwgdX@huddle.ruzwr.mongodb.net/local?retryWrites=true&w=majority"
+    "mongodb://127.0.0.1:27017"
 }
- /* Replace <password> with your database password */
+ 
