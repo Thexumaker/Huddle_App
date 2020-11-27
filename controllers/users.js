@@ -1,6 +1,8 @@
-var Users = require('./../models/doa/user.dao');
+var User = require('./../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const config = require('./../utils/config')
+
 
 
 exports.createUser =  function (req, res, next) {
@@ -9,24 +11,15 @@ exports.createUser =  function (req, res, next) {
             return res.status(500).json({error:err});
         }
         else {
-            const newUser = {
+            const newUser =  new User({
                 userEmail: req.body.email,
                 password: hash
-            };
-            Users.create(newUser, function(err, user) {
-                if(err) {
-                    res.json({
-                        error : err
-                    })
-                }
-                else {
-                    res.json({
-                        message : "User created successfully"
-                    })
-        
-                }
-                
+            });
+            newUser.save()
+            .then(savedUser => {
+                res.json(savedUser)
             })
+            .catch(error => console.log(error))
 
         }
        
@@ -37,45 +30,26 @@ exports.createUser =  function (req, res, next) {
 }
 
 exports.getUsers = function(req, res, next) {
-    Users.get({}, function(err, users) {
-        if(err) {
-            res.json({
-                error: err
-            })
-        }else {
-            res.json({
-                users: users
-            })
-
-        }
-        
+    User.find({}).then(users => {
+        res.json(users)
     })
 }
-exports.getMessages = function(req, res, next) {
-
-    Users.getMessages({_id: req.body.id}, function(err, users) {
-        console.log(users)
-        if(err) {
-            res.json({
-                error: err
-            })
-        }else {
-            Users.populate(users,  { path:"messages", model:"Messages" }, function(err, course){
-                console.log(course[0].messages)
-                res.json({
-                    message: course[0].messages
-                })
-               
-    });
-
-
-        }
-        
-    })
-}
-
 exports.getUser = function(req, res, next) {
-    Users.get({userEmail: req.body.email}, function(err, user) {
+    User.findById(req.params.id).then(user=> {
+        if (user) {
+            res.json(user)
+        }
+        else {
+            res.status(404).end()
+        }
+    }).catch(err => {
+        console.log(err)
+    })
+
+}
+
+exports.logIn = function(req, res, next) {
+    User.find({userEmail: req.body.email}, function(err, user) {
         if(err || user.length == 0) {
             res.status(401).json({
                 error: 'Auth failed'
@@ -90,11 +64,12 @@ exports.getUser = function(req, res, next) {
 
                 }
                 if (result) {
+
                     const token = jwt.sign({
                         email:user[0].userEmail,
                         id: user[0]._id
 
-                    }, 'Secret_Key', {expiresIn: '1hr'});
+                    }, config.SECRET_KEY, {expiresIn: '1hr'});
                     
                     res.status(200).json({
                         user: user,
@@ -127,7 +102,7 @@ exports.updateUser = function(req, res, next) {
                 userEmail: req.body.email,
                 password: hash
             };
-            Users.update({_id: req.params.id}, newUser, function(err, user) {
+            User.findOneAndUpdate({_id: req.params.id},  {$set: newUser},{new: true}, function(err, user) {
                 if(err) {
                     res.json({
                         error : err
@@ -151,14 +126,7 @@ exports.updateUser = function(req, res, next) {
 }
 
 exports.removeUser = function(req, res, next) {
-    Users.delete({_id: req.params.id}, function(err, user) {
-        if(err) {
-            res.json({
-                error : err
-            })
-        }
-        res.json({
-            message : "User deleted successfully"
-        })
-    })
+    User.findByIdAndRemove(req.params.id).then(() => {
+        res.status(204).end()
+    }).catch(err => console.log(err))
 }

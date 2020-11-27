@@ -4,7 +4,7 @@ var messageSchema = new Schema({
     messageSender: {
         
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Users"
+        ref: 'Users'
     },
 
     timeSent : { type : Date, default: Date.now },

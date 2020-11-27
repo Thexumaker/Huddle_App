@@ -1,5 +1,4 @@
-var Messages = require('./../models/doa/message.dao');
-var Users = require('./../models/doa/user.dao');
+var User = require('./../models/messages');
 var mongoose = require('mongoose');
 
 
