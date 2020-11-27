@@ -2,23 +2,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var messageSchema = new Schema({
     messageSender: {
-        
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users'
+        ref: 'User'
     },
 
-    timeSent : { type : Date, default: Date.now },
+    date : Date,
         
-    message: {
-        type:String
-    },
-    huddleId: {
-        type: String
-    }
+    message: String,
+    huddleId: String,
     
 }, {
     timestamps: true
 });
 
 
-module.exports = messageSchema;
+module.exports = mongoose.model('Message',messageSchema);

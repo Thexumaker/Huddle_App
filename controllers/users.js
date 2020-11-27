@@ -29,10 +29,9 @@ exports.createUser =  function (req, res, next) {
     
 }
 
-exports.getUsers = function(req, res, next) {
-    User.find({}).then(users => {
-        res.json(users)
-    })
+exports.getUsers = async function(req, res, next) {
+    const users = await User.find({}).populate('messages')
+    res.json(users)
 }
 exports.getUser = function(req, res, next) {
     User.findById(req.params.id).then(user=> {

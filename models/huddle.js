@@ -1,19 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var huddleSchema = new Schema({
-    memberCount: {
-        type:Number,
-        
-    },
+    memberCount: Number,
     interests: [{type:String}],
     members: [
         {
-            name: String,
-            userId: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
 
         }
-
-
     ]
     
 }, {
@@ -21,4 +16,4 @@ var huddleSchema = new Schema({
 });
 
 
-module.exports = huddleSchema;
+module.exports = mongoose.model('Huddle',huddleSchema);

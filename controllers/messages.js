@@ -1,44 +1,22 @@
-var User = require('./../models/messages');
+var Message = require('./../models/messages');
 var mongoose = require('mongoose');
+const User = require('../models/user');
 
 
-exports.createMessage =  function (req, res, next) {
-    newmessage = {
+exports.createMessage =  async function (req, res, next) {
+    newmessage =  new Message({
         messageSender: mongoose.Types.ObjectId(req.body.id),
         message: req.body.message,
-        huddle: 'Dick'
-    }
-    Messages.create(newmessage, function(err,testMessage){
-       
-        if(err) {
-            res.json({
-                error : 'sdsadsad'
-                })
-            }
-            
-            else {
-                console.log(testMessage)
-                Users.findOneAndUpdate(
-                    { _id: testMessage.messageSender }, 
-                    { $push: { messages: testMessage._id} },
-                   function (error, success) {
-                         if (error) {
-                             
-                            res.json({
-                                error : error
-                            })
-                         } else {
-
-                            res.json({
-                                message : "User updated successfully"
-                            })
-                         }
-                     });
-                 
-                
-    
+        huddle: 'Dick',
+        date: new Date()
+    })
+    const user = await User.findById(req.body.id)
+    console.log(user)
+    const savedMessage = await newmessage.save()
+    user.messages = user.messages.concat(mongoose.Types.ObjectId(savedMessage._id))
+    await user.save()
+    console.log(savedMessage._id)
+    res.json(savedMessage)
         }
-        
-    }
-        
-        )}
+
+
