@@ -9,6 +9,14 @@ var huddleSchema = new Schema({
         ref: 'User'
 
         }
+    ],
+    messages: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Message'
+    
+            }
+
     ]
     
 }, {

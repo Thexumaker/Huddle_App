@@ -5,6 +5,12 @@ const app = express()
 const usersRoutes = require('./routes/users');
 const messageRoutes = require('./routes/messages');
 const mongoose = require('mongoose');
+const huddleRoutes = require('./routes/huddles');
+const { response } = require('express');
+
+
+
+
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connected")
@@ -13,9 +19,12 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
     console.log(error)
   })
 
+
+
 app.use(express.json())
 app.use('/user',usersRoutes)
 app.use('/messages',messageRoutes)
+app.use('/huddle',huddleRoutes)
 
 
 const port = config.PORT || 8082;

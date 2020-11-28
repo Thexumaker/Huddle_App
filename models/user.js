@@ -12,8 +12,8 @@ var userSchema = new Schema({
         required : true
     },
     Huddles: [{
-        name:String,
-        huddleId: Number
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Huddle"
 
     }],
     messages: [{

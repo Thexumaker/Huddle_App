@@ -30,6 +30,7 @@
     "mongoose": "^5.10.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "socket.io": "^3.0.3",
     "validation": "0.0.1"
   },
   "devDependencies": {

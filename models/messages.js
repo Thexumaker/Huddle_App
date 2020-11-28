@@ -9,7 +9,10 @@ var messageSchema = new Schema({
     date : Date,
         
     message: String,
-    huddleId: String,
+    huddleId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Huddle'
+    },
     
 }, {
     timestamps: true

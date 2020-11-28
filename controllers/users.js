@@ -22,15 +22,12 @@ exports.createUser =  function (req, res, next) {
             .catch(error => console.log(error))
 
         }
-       
     }
     )
-    
-    
 }
 
 exports.getUsers = async function(req, res, next) {
-    const users = await User.find({}).populate('messages')
+    const users = await User.find({}).populate(['messages','Huddles'])
     res.json(users)
 }
 exports.getUser = function(req, res, next) {
@@ -120,8 +117,7 @@ exports.updateUser = function(req, res, next) {
        
     }
     )
-    
-    
+
 }
 
 exports.removeUser = function(req, res, next) {
