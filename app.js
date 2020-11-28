@@ -27,7 +27,7 @@ app.use('/messages',messageRoutes)
 app.use('/huddle',huddleRoutes)
 
 
-const port = config.PORT || 8082;
+const port = process.env.PORT  || 8082;
 
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
