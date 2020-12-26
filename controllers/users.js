@@ -2,9 +2,6 @@ var User = require('./../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('./../utils/config')
-
-
-
 exports.createUser =  function (req, res) {
   bcrypt.hash(req.body.password,10, (err,hash) => {
     if (err) {
