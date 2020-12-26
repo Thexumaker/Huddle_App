@@ -20,4 +20,10 @@ exports.createHuddle = async function(req,res,next) {
     res.json(savedHuddle)
 
 }
+exports.getHuddles = async function(req,res,next) {
+    const huddles = await Huddle.find({}).populate(['members','messages'])
+    res.json(huddles)
+    
+
+}
 

@@ -11,6 +11,7 @@ exports.createMessage =  async function (req, res, next) {
         message: req.body.message,
         date: new Date()
     })
+    //cal python api
     const user = await User.findById(req.body.id)
     const huddle = await Huddle.findById(req.body.huddleID)
     const savedMessage = await newmessage.save()

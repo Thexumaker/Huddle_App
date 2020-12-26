@@ -3,6 +3,7 @@ const huddleRouter = require('express').Router()
 
 
 huddleRouter.post('/', Huddle.createHuddle);
+huddleRouter.get('/', Huddle.getHuddles);
 
 
 
