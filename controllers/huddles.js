@@ -1,5 +1,5 @@
-var User = require('./../models/user')
-var Huddle = require('./../models/huddle')
+let User = require('./../models/user')
+let Huddle = require('./../models/huddle')
 
 var mongoose = require('mongoose')
 

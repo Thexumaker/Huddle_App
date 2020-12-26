@@ -2,27 +2,6 @@ var User = require('./../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('./../utils/config')
-
-
-
-<<<<<<< HEAD
-exports.createUser =  function (req, res, next) {
-    bcrypt.hash(req.body.password,10, (err,hash) => {
-        if (err) {
-            return res.status(500).json({error:err});
-        }
-        else {
-            const newUser =  new User({
-                userEmail: req.body.email,
-                password: hash
-                
-            });
-            newUser.save()
-            .then(savedUser => {
-                res.json(savedUser)
-            })
-            .catch(error => console.log(error))
-=======
 exports.createUser =  function (req, res) {
   bcrypt.hash(req.body.password,10, (err,hash) => {
     if (err) {
@@ -38,31 +17,12 @@ exports.createUser =  function (req, res) {
           res.json(savedUser)
         })
         .catch(error => console.log(error))
->>>>>>> c59226d01255e8a7349c5a6b87e402da74efff38
 
     }
   }
   )
 }
 
-<<<<<<< HEAD
-exports.getUsers = async function(req, res, next) {
-    const users = await User.find({}).populate(['messages','Huddles']);
-    res.json(users);
-    
-};
-exports.getUser = function(req, res, next) {
-    User.findById(req.params.id).then(user=> {
-        if (user) {
-            res.json(user)
-        }
-        else {
-            res.status(404).end()
-        }
-    }).catch(err => {
-        console.log(err)
-    })
-=======
 exports.getUsers = async function(req, res) {
   const users = await User.find({}).populate(['messages','Huddles'])
   res.json(users)
@@ -78,7 +38,6 @@ exports.getUser = function(req, res) {
   }).catch(err => {
     console.log(err)
   })
->>>>>>> c59226d01255e8a7349c5a6b87e402da74efff38
 
 }
 
