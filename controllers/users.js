@@ -14,6 +14,7 @@ exports.createUser =  function (req, res, next) {
             const newUser =  new User({
                 userEmail: req.body.email,
                 password: hash
+                
             });
             newUser.save()
             .then(savedUser => {
@@ -27,9 +28,10 @@ exports.createUser =  function (req, res, next) {
 }
 
 exports.getUsers = async function(req, res, next) {
-    const users = await User.find({}).populate(['messages','Huddles'])
-    res.json(users)
-}
+    const users = await User.find({}).populate(['messages','Huddles']);
+    res.json(users);
+    
+};
 exports.getUser = function(req, res, next) {
     User.findById(req.params.id).then(user=> {
         if (user) {
