@@ -1,22 +1,22 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 var messageSchema = new Schema({
-    messageSender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
+  messageSender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
 
-    date : Date,
+  date : Date,
         
-    message: String,
-    huddleId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Huddle'
-    },
+  message: String,
+  huddleId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Huddle'
+  },
     
 }, {
-    timestamps: true
-});
+  timestamps: true
+})
 
 
-module.exports = mongoose.model('Message',messageSchema);
+module.exports = mongoose.model('Message',messageSchema)
