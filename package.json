@@ -39,9 +39,6 @@
     "validation": "0.0.1"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "nodemon": "^2.0.6"
-=======
     "eslint": "^7.16.0",
     "nodemon": "^2.0.4"
   }
