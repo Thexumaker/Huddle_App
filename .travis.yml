@@ -5,3 +5,4 @@ node_js:
 script:
     - echo '***Build starts***'
     - npm install
+    - npm run lint
