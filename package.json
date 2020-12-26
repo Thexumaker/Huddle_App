@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node app.js",
     "app": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "validation": "0.0.1"
   },
   "devDependencies": {
+    "eslint": "^7.16.0",
     "nodemon": "^2.0.4"
   }
 }

@@ -1,28 +1,27 @@
-var User = require('./../models/user');
-var Huddle = require('./../models/huddle');
-var Message = require('./../models/messages');
-const config = require('./../utils/config')
-var mongoose = require('mongoose');
+var User = require('./../models/user')
+var Huddle = require('./../models/huddle')
 
-exports.createHuddle = async function(req,res,next) {
-    const newHuddle = new Huddle({
-        interests: [req.body.interests],
-        members: [mongoose.Types.ObjectId(req.body.id)],
-        messages: [],
-        memberCount:1
+var mongoose = require('mongoose')
 
-    })
-    const savedHuddle = await newHuddle.save()
-    console.log(savedHuddle._id)
-    const user = await User.findById(mongoose.Types.ObjectId(req.body.id))
-    user.Huddles = user.Huddles.concat(mongoose.Types.ObjectId(savedHuddle._id))
-    await user.save()
-    res.json(savedHuddle)
+exports.createHuddle = async function(req,res) {
+  const newHuddle = new Huddle({
+    interests: [req.body.interests],
+    members: [mongoose.Types.ObjectId(req.body.id)],
+    messages: [],
+    memberCount:1
+
+  })
+  const savedHuddle = await newHuddle.save()
+  console.log(savedHuddle._id)
+  const user = await User.findById(mongoose.Types.ObjectId(req.body.id))
+  user.Huddles = user.Huddles.concat(mongoose.Types.ObjectId(savedHuddle._id))
+  await user.save()
+  res.json(savedHuddle)
 
 }
-exports.getHuddles = async function(req,res,next) {
-    const huddles = await Huddle.find({}).populate(['members','messages'])
-    res.json(huddles)
+exports.getHuddles = async function(req,res) {
+  const huddles = await Huddle.find({}).populate(['members','messages'])
+  res.json(huddles)
     
 
 }
