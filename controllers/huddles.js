@@ -25,6 +25,7 @@ exports.getHuddles = async function(req,res) {
     
 
 }
+
 exports.getMessages = async function(req,res) {
   const huddles = await Huddle.findById(req.params.huddleID).populate(['messages'])
   res.json(huddles)
