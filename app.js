@@ -5,6 +5,8 @@ const app = express()
 const usersRoutes = require('./routes/users')
 const messageRoutes = require('./routes/messages')
 const mongoose = require('mongoose')
+const cors = require('cors')
+
 const huddleRoutes = require('./routes/huddles')
 
 
@@ -16,6 +18,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
     console.log(error)
       
   })
+app.use(cors())
 app.use(express.json())
 app.use('/user',usersRoutes)
 app.use('/messages',messageRoutes)
