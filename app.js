@@ -18,6 +18,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
     console.log(error)
       
   })
+  
 app.use(cors({credentials: true, origin: 'https://huddle-frontend-flax.vercel.app'}))
 app.use(express.json())
 app.use('/user',usersRoutes)
