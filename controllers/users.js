@@ -2,26 +2,23 @@ var User = require('./../models/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('./../utils/config')
-exports.createUser =  function (req, res) {
-  bcrypt.hash(req.body.password,10, (err,hash) => {
-    if (err) {
-      return res.status(500).json({error:err})
-    }
-    else {
-      const newUser =  new User({
-        userEmail: req.body.email,
-        password: hash
-      })
-      newUser.save()
-        .then(savedUser => {
-          res.json(savedUser)
-        })
-        .catch(error => console.log(error))
+exports.createUser =  async function (req, res) {
+  const hashed = await bcrypt.hash(req.body.password,10) 
+    
 
-    }
-  }
-  )
+  const newUser =  new User({
+    userEmail: req.body.email,
+    password: hashed
+  })
+  newUser.save()
+    .then(savedUser => {
+      res.json(savedUser)
+    })
+    .catch(error => console.log(error))
+
+    
 }
+
 
 exports.getUsers = async function(req, res) {
   const users = await User.find({}).populate(['messages','Huddles'])
