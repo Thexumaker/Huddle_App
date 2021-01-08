@@ -60,7 +60,9 @@ exports.logIn = function(req, res) {
             id: user[0]._id
 
           }, config.SECRET_KEY, {expiresIn: '1hr'})
+          
           res.cookie('token', token, { httpOnly: true })
+          
           res.status(200).json({
             user: user
           })
