@@ -24,6 +24,7 @@ exports.createEvent = async function(req,res) {
 
     huddle.event = eventForHuddle
     await huddle.save()
+    
   
     res.json(savedEvent)
 
